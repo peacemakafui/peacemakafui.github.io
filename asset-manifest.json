@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/peacemakafui.github.io/static/css/main.8995115c.chunk.css",
+    "main.js": "/peacemakafui.github.io/static/js/main.112602b5.chunk.js",
+    "main.js.map": "/peacemakafui.github.io/static/js/main.112602b5.chunk.js.map",
+    "runtime-main.js": "/peacemakafui.github.io/static/js/runtime-main.d0fa82ee.js",
+    "runtime-main.js.map": "/peacemakafui.github.io/static/js/runtime-main.d0fa82ee.js.map",
+    "static/js/2.aa296f4f.chunk.js": "/peacemakafui.github.io/static/js/2.aa296f4f.chunk.js",
+    "static/js/2.aa296f4f.chunk.js.map": "/peacemakafui.github.io/static/js/2.aa296f4f.chunk.js.map",
+    "index.html": "/peacemakafui.github.io/index.html",
+    "static/css/main.8995115c.chunk.css.map": "/peacemakafui.github.io/static/css/main.8995115c.chunk.css.map",
+    "static/js/2.aa296f4f.chunk.js.LICENSE.txt": "/peacemakafui.github.io/static/js/2.aa296f4f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d0fa82ee.js",
+    "static/js/2.aa296f4f.chunk.js",
+    "static/css/main.8995115c.chunk.css",
+    "static/js/main.112602b5.chunk.js"
+  ]
+}
