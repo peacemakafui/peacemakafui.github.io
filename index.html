@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makafui Atimpo | Software Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080d14;
+            --bg2: #0d1520;
+            --bg3: #111c2e;
+            --border: #1a2d44;
+            --teal: #2dd4bf;
+            --teal-dim: #1a8a7d;
+            --teal-glow: rgba(45, 212, 191, 0.12);
+            --text: #c8d8e8;
+            --text-dim: #6b8099;
+            --white: #e8f0f8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* ── Noise overlay ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* ── Grid background ── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(45,212,191,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(45,212,191,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8,13,20,0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 0;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--white);
+        }
+
+        .logo span { color: var(--teal); }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--teal); }
+
+        .nav-cta {
+            color: var(--teal) !important;
+            border: 1px solid rgba(45,212,191,0.3) !important;
+            padding: 8px 20px;
+            border-radius: 100px;
+            transition: background 0.2s !important;
+        }
+
+        .nav-cta:hover { background: var(--teal-glow) !important; }
+
+        /* ── Hero ── */
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 120px 40px 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--teal);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-tag::before {
+            content: '';
+            display: inline-block;
+            width: 28px;
+            height: 1px;
+            background: var(--teal);
+        }
+
+        h1 {
+            font-size: clamp(52px, 8vw, 88px);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.0;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        h1 .accent { color: var(--teal); }
+
+        .hero-sub {
+            font-size: clamp(22px, 3.5vw, 38px);
+            font-weight: 600;
+            color: #3a5a7a;
+            line-height: 1.3;
+            max-width: 800px;
+            margin-bottom: 32px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 580px;
+            color: var(--text);
+            margin-bottom: 48px;
+        }
+
+        .hero-desc strong { color: var(--white); }
+
+        .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: var(--teal);
+            color: #080d14;
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #5eead4;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(45,212,191,0.3);
+        }
+
+        .btn-ghost {
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: all 0.2s;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--teal-dim);
+            color: var(--teal);
+            background: var(--teal-glow);
+        }
+
+        /* ── Stats ── */
+        .stats {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+        }
+
+        .stat-card:hover { border-color: var(--teal-dim); }
+
+        .stat-num {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--teal);
+            letter-spacing: -1px;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        /* ── Sections ── */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 56px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--teal);
+            font-weight: 400;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            max-width: 300px;
+        }
+
+        /* ── Timeline ── */
+        .timeline { display: flex; flex-direction: column; gap: 0; }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .timeline-item:last-child { border-bottom: none; }
+
+        .timeline-left { padding-top: 4px; }
+
+        .timeline-period {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--teal);
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-company {
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .timeline-company strong {
+            display: block;
+            color: var(--text);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .timeline-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 3px 8px;
+            background: var(--teal-glow);
+            border: 1px solid rgba(45,212,191,0.2);
+            border-radius: 100px;
+            color: var(--teal);
+            margin-top: 10px;
+        }
+
+        .job-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .job-company {
+            font-size: 14px;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+
+        .job-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .job-bullets li {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .job-bullets li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--teal);
+            font-size: 12px;
+            top: 2px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 4px 10px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-dim);
+        }
+
+        /* ── Skills ── */
+        .skills-bg { background: var(--bg2); }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .skill-group { }
+
+        .skill-group-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--teal);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skill-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text);
+            padding: 8px 14px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .skill-item:hover {
+            border-color: var(--teal-dim);
+            color: var(--white);
+        }
+
+        /* ── Education ── */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .edu-card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .edu-card:hover { border-color: var(--teal-dim); }
+
+        .edu-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 80px; height: 80px;
+            background: radial-gradient(circle, var(--teal-glow) 0%, transparent 70%);
+        }
+
+        .edu-degree {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .edu-school {
+            font-size: 13px;
+            color: var(--teal);
+            margin-bottom: 12px;
+        }
+
+        .edu-period {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .edu-courses {
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .honor-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(45,212,191,0.2), rgba(45,212,191,0.05));
+            border: 1px solid rgba(45,212,191,0.3);
+            border-radius: 100px;
+            color: var(--teal);
+            margin-bottom: 12px;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .footer-name span { color: var(--teal); }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin: 24px 0;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--teal); }
+
+        .footer-copy {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero > * {
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .hero > *:nth-child(1) { animation-delay: 0.1s; }
+        .hero > *:nth-child(2) { animation-delay: 0.2s; }
+        .hero > *:nth-child(3) { animation-delay: 0.3s; }
+        .hero > *:nth-child(4) { animation-delay: 0.4s; }
+        .hero > *:nth-child(5) { animation-delay: 0.5s; }
+
+        /* ── Glow orb ── */
+        .glow-orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(45,212,191,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            top: -100px;
+            right: -200px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .stats { grid-template-columns: 1fr; }
+            .timeline-item { grid-template-columns: 1fr; gap: 12px; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .edu-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .section-inner { padding: 60px 24px; }
+            .hero { padding: 80px 24px 60px; }
+            .stats { padding: 0 24px 60px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glow-orb"></div>
+
+<nav>
+    <div class="nav-inner">
+        <span class="logo">MAKAFUI<span>.DEV</span></span>
+        <ul class="nav-links">
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="mailto:makafuiatimpo@gmail.com" class="nav-cta">Contact Me</a></li>
+        </ul>
+    </div>
+</nav>
+
+<header class="hero">
+    <p class="hero-tag">Hi, my name is</p>
+    <h1>Makafui<br>Atimpo<span class="accent">.</span></h1>
+    <h2 class="hero-sub">I build scalable systems for<br>Fintech, Automation &amp; Robotics.</h2>
+    <p class="hero-desc">
+        Software Engineer with a <strong>strong ownership mindset</strong> and deep proficiency in backend technologies.
+        Currently architecting payment infrastructures and maintaining mission-critical gateway software.
+        I specialize in turning complex requirements into reliable, high-performance code.
+    </p>
+    <div class="btn-group">
+        <a href="https://github.com/peacemakafui" class="btn-primary">View GitHub</a>
+        <a href="https://linkedin.com/in/makafuiatimpo" class="btn-ghost">LinkedIn</a>
+    </div>
+</header>
+
+<div class="stats">
+    <div class="stat-card">
+        <div class="stat-num">70%</div>
+        <div class="stat-label">Improvement in business process efficiency for C-Leanship via custom automation flows.</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">15+ hrs</div>
+        <div class="stat-label">Manual effort saved weekly by automating invoice workflows with e-conomic &amp; Podio APIs.</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">1st Class</div>
+        <div class="stat-label">BSc in Telecommunication Engineering — Ghana Communication Technology University.</div>
+    </div>
+</div>
+
+<section id="experience">
+    <div class="section-inner">
+        <h2 class="section-title"><span class="section-num">01.</span> Professional Experience</h2>
+
+        <div class="timeline">
+
+            <!-- appsNmobile -->
+            <div class="timeline-item">
+                <div class="timeline-left">
+                    <div class="timeline-period">MAY 2025 — PRESENT</div>
+                    <div class="timeline-company">
+                        <strong>appsNmobile Solutions</strong>
+                        Accra, Ghana<br>
+                        Fintech · Payment Solutions
+                    </div>
+                    <span class="timeline-badge">Current Role</span>
+                </div>
+                <div class="timeline-right">
+                    <div class="job-title">Senior Software Developer</div>
+                    <div class="job-company">@ appsNmobile Solutions Limited</div>
+                    <ul class="job-bullets">
+                        <li>Designing and implementing payment system integrations for banks and financial institutions, enabling seamless fund flows across platforms.</li>
+                        <li>Architecting system infrastructure for the deployment of payment systems for in-house and external applications.</li>
+                        <li>Maintaining the <strong style="color:var(--white)">vPOS software</strong> — a virtual point-of-sale platform used by merchants for card and mobile money acceptance.</li>
+                        <li>Maintaining the <strong style="color:var(--white)">Orchard Payment Gateway</strong> — a core payment routing and processing system handling transaction orchestration between acquirers and issuing banks.</li>
+                        <li>Developing payment applications and maintaining payment gateway software with a focus on reliability and uptime.</li>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Ruby</span>
+                        <span class="tech-tag">Elixir</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Payment Gateways</span>
+                        <span class="tech-tag">vPOS</span>
+                        <span class="tech-tag">Orchard</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HenryFlow -->
+            <div class="timeline-item">
+                <div class="timeline-left">
+                    <div class="timeline-period">SEP 2022 — JAN 2025</div>
+                    <div class="timeline-company">
+                        <strong>HenryFlow ApS</strong>
+                        Denmark (Remote)<br>
+                        Business Process Automation
+                    </div>
+                </div>
+                <div class="timeline-right">
+                    <div class="job-title">Automation Software Engineer</div>
+                    <div class="job-company">@ HenryFlow ApS</div>
+                    <ul class="job-bullets">
+                        <li>Designed and implemented scalable backend services and RESTful APIs for the HenryFlow platform, improving system performance and reliability.</li>
+                        <li>Automated business invoice processes for WolmerGruppen by integrating e-conomic and Podio APIs, reducing manual effort by 15+ hours per week.</li>
+                        <li>Optimized existing workflows for C-Leanship and developed new automation flows, enhancing business process efficiency by 70%.</li>
+                        <li>Collaborated with cross-functional teams to maintain and improve the platform's system architecture and implement new features.</li>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">RESTful APIs</span>
+                        <span class="tech-tag">e-conomic API</span>
+                        <span class="tech-tag">Podio API</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toldo -->
+            <div class="timeline-item">
+                <div class="timeline-left">
+                    <div class="timeline-period">MAY 2021 — NOV 2021</div>
+                    <div class="timeline-company">
+                        <strong>Toldo Company Ltd</strong>
+                        Accra, Ghana<br>
+                        Software House
+                    </div>
+                </div>
+                <div class="timeline-right">
+                    <div class="job-title">Backend Software Engineer</div>
+                    <div class="job-company">@ Toldo Company Limited</div>
+                    <ul class="job-bullets">
+                        <li>Designed and implemented a billing system for recurring payments and user subscriptions, integrating with third-party payment gateways.</li>
+                        <li>Built and documented RESTful APIs, supporting front-end engineers with seamless API integrations.</li>
+                        <li>Configured and maintained backend servers, databases, and third-party API integrations, ensuring system reliability and scalability.</li>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">Laravel</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">REST APIs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Soko -->
+            <div class="timeline-item">
+                <div class="timeline-left">
+                    <div class="timeline-period">JUN 2019 — DEC 2020</div>
+                    <div class="timeline-company">
+                        <strong>Soko Aerial Robotics</strong>
+                        Accra, Ghana<br>
+                        Drone Technology
+                    </div>
+                </div>
+                <div class="timeline-right">
+                    <div class="job-title">Research Software Engineer</div>
+                    <div class="job-company">@ Soko Aerial Robotics</div>
+                    <ul class="job-bullets">
+                        <li>Built machine learning models for object detection and precision farming — including wheat rust detection, maize crop counting, and telecom mast rust detection.</li>
+                        <li>Developed serial communication systems between Raspberry Pi and Pixhawk flight controllers, enabling real-time object detection during drone flights.</li>
+                        <li>Built a hardware-in-the-loop flight simulator, improving testing efficiency and reducing field testing risks.</li>
+                        <li>Analyzed large datasets to improve model accuracy and provided actionable insights for project improvements.</li>
+                        <li>Provided technical guidance on autonomous drone assembly and flight controller integration for optimized flight path planning.</li>
+                    </ul>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Machine Learning</span>
+                        <span class="tech-tag">Raspberry Pi</span>
+                        <span class="tech-tag">Pixhawk</span>
+                        <span class="tech-tag">Computer Vision</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="skills" class="skills-bg">
+    <div class="section-inner">
+        <h2 class="section-title"><span class="section-num">02.</span> Technical Stack</h2>
+
+        <div class="skills-grid">
+            <div class="skill-group">
+                <div class="skill-group-label">Languages</div>
+                <div class="skill-items">
+                    <div class="skill-item">Ruby</div>
+                    <div class="skill-item">Elixir</div>
+                    <div class="skill-item">Python</div>
+                    <div class="skill-item">JavaScript</div>
+                    <div class="skill-item">PHP</div>
+                    <div class="skill-item">Java &amp; C++</div>
+                    <div class="skill-item">SQL</div>
+                </div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-label">Frameworks &amp; Tools</div>
+                <div class="skill-items">
+                    <div class="skill-item">Laravel</div>
+                    <div class="skill-item">React.js</div>
+                    <div class="skill-item">Nest.js</div>
+                    <div class="skill-item">Node.js</div>
+                    <div class="skill-item">PostgreSQL · MySQL · MongoDB</div>
+                </div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-label">Specialties</div>
+                <div class="skill-items">
+                    <div class="skill-item">Microservices Architecture</div>
+                    <div class="skill-item">RESTful API Design</div>
+                    <div class="skill-item">Payment Gateway Integration</div>
+                    <div class="skill-item">Machine Learning</div>
+                    <div class="skill-item">Cloud Computing</div>
+                    <div class="skill-item">Business Process Automation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="education">
+    <div class="section-inner">
+        <h2 class="section-title"><span class="section-num">03.</span> Education</h2>
+
+        <div class="edu-grid">
+            <div class="edu-card">
+                <div class="edu-degree">MSc Computer Science</div>
+                <div class="edu-school">Ghana Communication Technology University</div>
+                <div class="edu-period">SEP 2024 — PRESENT &nbsp;·&nbsp; Accra, Ghana</div>
+                <div class="edu-courses">
+                    Relevant coursework: Data and Network Security · Data Structures and Algorithms · Artificial Intelligence · Advanced Databases
+                </div>
+            </div>
+            <div class="edu-card">
+                <span class="honor-badge">First-Class Honours</span>
+                <div class="edu-degree">BSc Telecommunication Engineering</div>
+                <div class="edu-school">Ghana Communication Technology University</div>
+                <div class="edu-period">SEP 2015 — NOV 2019 &nbsp;·&nbsp; Accra, Ghana</div>
+                <div class="edu-courses">
+                    Relevant coursework: Paradigms of Programming · Digital Electronics · Computer Architecture · Satellite Communication
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-name">MAKAFUI<span>.DEV</span></div>
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:4px;">Accra, Ghana</p>
+    <div class="footer-links">
+        <a href="https://github.com/peacemakafui">GitHub</a>
+        <a href="https://linkedin.com/in/makafuiatimpo">LinkedIn</a>
+        <a href="mailto:makafuiatimpo@gmail.com">makafuiatimpo@gmail.com</a>
+    </div>
+    <p class="footer-copy">Designed &amp; Built by Makafui Atimpo</p>
+</footer>
+
+</body>
+</html>
